@@ -23,7 +23,7 @@ public class ConsoleReader {
             return result;
         } catch (NumberFormatException e) {
             LOGGER.error("String {} not a number.", input);
-            throw new IllegalArgumentException("Incorrect input. String " + input + "not a number");
+            throw new IllegalArgumentException("Incorrect input. String " + input + " not a number");
         }
     }
 
@@ -42,7 +42,6 @@ public class ConsoleReader {
 
     public String read() {
         String result = "";
-
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         LOGGER.trace("Initialize reading from console");
         try {
@@ -51,7 +50,6 @@ public class ConsoleReader {
         } catch (IOException e) {
             LOGGER.error("Can't read from console: {}", e.getMessage());
         }
-
         return result;
     }
 }

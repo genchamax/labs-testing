@@ -17,7 +17,7 @@ public class Calculator {
 
         if (precision < 0) {
             LOGGER.error("Precision less than zero: {}", precision);
-            throw new IllegalArgumentException("Precision should greater than zero");
+            throw new IllegalArgumentException("Precision should be greater than zero");
         }
 
         BigDecimal result = new BigDecimal(0);

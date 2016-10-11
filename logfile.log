@@ -1,0 +1,8 @@
+2016-10-11 22:46:19 INFO  ConsoleReader:49 - Read from console string fhbfxbhfx
+2016-10-11 22:46:19 ERROR ConsoleReader:25 - String fhbfxbhfx not a number.
+2016-10-11 22:46:23 INFO  ConsoleReader:49 - Read from console string 23.3256
+2016-10-11 22:46:23 INFO  ConsoleReader:22 - Read number 23.3256 from console.
+2016-10-11 22:46:27 INFO  ConsoleReader:49 - Read from console string ddsff
+2016-10-11 22:46:27 ERROR ConsoleReader:38 - String ddsff not a integer number.
+2016-10-11 22:46:30 INFO  ConsoleReader:49 - Read from console string 23
+2016-10-11 22:46:30 INFO  ConsoleReader:35 - Read number 23 from console.
