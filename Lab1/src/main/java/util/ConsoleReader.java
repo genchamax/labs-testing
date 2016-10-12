@@ -19,6 +19,17 @@ public class ConsoleReader {
 
         try {
             double result = Double.parseDouble(input);
+
+            if (result == Double.POSITIVE_INFINITY) {
+                LOGGER.error("Number {} is too large", input);
+                throw new IllegalArgumentException("Number " + input + " is too large. Maximal value is " + Double.MAX_VALUE);
+            }
+
+            if (result == Double.NEGATIVE_INFINITY) {
+                LOGGER.error("Number {} is too small", input);
+                throw new IllegalArgumentException("Number " + input + " is too small. Minimal value is " + Double.MIN_VALUE);
+            }
+
             LOGGER.info("Read number {} from console.", result);
             return result;
         } catch (NumberFormatException e) {
@@ -36,7 +47,8 @@ public class ConsoleReader {
             return result;
         } catch (NumberFormatException e) {
             LOGGER.error("String {} not a integer number.", input);
-            throw new IllegalArgumentException("Incorrect input. String " + input + "not a integer number");
+            throw new IllegalArgumentException("Incorrect input. String " + input +
+                    " not a integer number ([" + Integer.MIN_VALUE + ", " + Integer.MAX_VALUE + "])");
         }
     }
 
