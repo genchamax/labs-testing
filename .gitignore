@@ -3,4 +3,13 @@
 Labs.iml
 /Lab1/Lab1.iml
 /Lab1/target/
-/logfile*.log
+/logfile*.log*
+/Lab2/target
+/Lab2/Lab2.iml
+/Lab2/target/
+/Lab2/logfile*.log*
+/Lab1/logfile*.log*
+/Lab3/logfile*.log*
+/Lab4/logfile*.log*
+/Lab5/logfile*.log*
+/Lab6/logfile*.log*

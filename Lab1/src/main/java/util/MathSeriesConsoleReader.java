@@ -1,13 +1,22 @@
 package util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Created by Max on 11.10.2016.
  */
 public class MathSeriesConsoleReader extends ConsoleReader {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MathSeriesConsoleReader.class);
+
     public int readIntWhileCorrect() {
         try {
             System.out.println("Enter precision:");
             int precision = readInt();
+            if (precision <= 0) {
+                LOGGER.error("Precision less than zero: {}", precision);
+                throw new IllegalArgumentException("Precision should be greater than zero");
+            }
             if (!doesUserAgreeToContinue(precision))
                 throw new IllegalArgumentException("Aborting by user");
             return precision;

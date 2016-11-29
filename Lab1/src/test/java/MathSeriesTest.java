@@ -28,4 +28,9 @@ public class MathSeriesTest extends Assert {
         int n = 0;
         assertEquals(Math.cos(x), calculator.calculateMathSeries(x, n).doubleValue(), 0.000000000000000000000001);
     }
+
+    @Test
+    public void testCorrectCalc3() {
+        assertEquals(1, calculator.calculateMathSeries(0, 1).doubleValue(), 0.0001);
+    }
 }
