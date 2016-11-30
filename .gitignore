@@ -7,9 +7,14 @@ Labs.iml
 /Lab2/target
 /Lab2/Lab2.iml
 /Lab2/target/
+/Lab3/target/
+/Lab4/target/
+/Lab5/target/
+/Lab6/target/
 /Lab2/logfile*.log*
 /Lab1/logfile*.log*
 /Lab3/logfile*.log*
 /Lab4/logfile*.log*
 /Lab5/logfile*.log*
 /Lab6/logfile*.log*
+/Lab3/Lab3.iml
