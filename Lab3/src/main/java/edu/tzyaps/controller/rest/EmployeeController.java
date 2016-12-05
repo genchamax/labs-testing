@@ -2,6 +2,8 @@ package edu.tzyaps.controller.rest;
 
 import edu.tzyaps.model.Department;
 import edu.tzyaps.service.EmployeeService;
+import edu.tzyaps.util.SalaryCalculator;
+import edu.tzyaps.util.SalaryQualifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,12 @@ import org.springframework.web.bind.annotation.*;
 public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private SalaryCalculator salaryCalculator;
+
+    @Autowired
+    private SalaryQualifier salaryQualifier;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity getAllEmployees() {
@@ -43,12 +51,12 @@ public class EmployeeController {
 
     @RequestMapping(value = "/salgrade/{id}", method = RequestMethod.GET)
     public ResponseEntity getSalgradeById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(employeeService.getSalgradeById(id));
+        return ResponseEntity.ok(employeeService.getSalgradeById(id, salaryQualifier));
     }
 
     @RequestMapping(value = "/salgrade/full/{id}", method = RequestMethod.GET)
     public ResponseEntity getFullSalgradeById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(employeeService.getFullSalgradeById(id));
+        return ResponseEntity.ok(employeeService.getFullSalgradeById(id, salaryCalculator, salaryQualifier));
     }
 
 

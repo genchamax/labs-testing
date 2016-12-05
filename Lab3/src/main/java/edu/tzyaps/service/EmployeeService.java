@@ -1,9 +1,9 @@
 package edu.tzyaps.service;
 
 import edu.tzyaps.model.Employee;
-import edu.tzyaps.util.calculator.SalaryCalculator;
+import edu.tzyaps.util.SalaryCalculator;
+import edu.tzyaps.util.SalaryQualifier;
 import edu.tzyaps.util.enums.SalGrade;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,23 +11,21 @@ import org.springframework.stereotype.Service;
  */
 @Service("employeeService")
 public class EmployeeService extends BasicService {
-    @Autowired
-    private SalaryCalculator salaryCalculator;
 
     public EmployeeService() {
         super(Employee.class);
     }
 
-    public SalGrade getSalgradeById(Integer employeeId) {
+    public SalGrade getSalgradeById(Integer employeeId, SalaryQualifier qualifier) {
         Employee employee = (Employee) getById(employeeId);
-        return salaryCalculator.getSalGrade(employee.getSalary());
+        return qualifier.getSalGrade(employee.getSalary());
     }
 
-    public SalGrade getFullSalgradeById(Integer employeeId) {
+    public SalGrade getFullSalgradeById(Integer employeeId, SalaryCalculator calculator, SalaryQualifier qualifier) {
         Employee employee = (Employee) getById(employeeId);
         Integer salary = employee.getSalary();
         Integer commission = employee.getCommission();
-        Integer fullSalary = salaryCalculator.getFullSalary(salary, commission);
-        return salaryCalculator.getSalGrade(fullSalary);
+        Integer fullSalary = calculator.getFullSalary(salary, commission);
+        return qualifier.getSalGrade(fullSalary);
     }
 }

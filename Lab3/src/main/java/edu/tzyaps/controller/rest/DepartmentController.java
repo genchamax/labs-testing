@@ -1,9 +1,7 @@
 package edu.tzyaps.controller.rest;
 
 import edu.tzyaps.model.Department;
-import edu.tzyaps.model.Employee;
 import edu.tzyaps.service.DepartmentService;
-import edu.tzyaps.util.calculator.SalaryCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
