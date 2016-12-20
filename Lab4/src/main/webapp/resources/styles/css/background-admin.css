@@ -1,0 +1,61 @@
+body {
+    background: #0e6ebd;
+}
+
+.image-item {
+    height: 20vw;
+}
+
+.image-item img {
+    width: 95%;
+    height: 95%;
+}
+
+.pagination {
+    position: fixed;
+    width: 20%;
+    bottom: 5px;
+    left: 40%;
+    right: 40%;
+}
+
+#upload-image {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.add-image label {
+    width: 95%;
+    height: 95%;
+    border: 5px solid white;
+    cursor: pointer;
+    -webkit-border-radius: 10%;
+    -moz-border-radius: 10%;
+    -ms-border-radius: 10%;
+    -o-border-radius: 10%;
+    border-radius: 10%;
+}
+
+.add-image label i {
+    display: block;
+    float: left;
+    width: 100%;
+    line-height: 1em;
+    margin-top: -0.5em;
+    text-align: center;
+    color: white;
+    padding-top: 33%;
+    font-size: 10em;
+}
+
+.delete-image {
+    position: absolute;
+    right: 10%;
+    top: 0%;
+    z-index: 5;
+    font-size: 3em;
+}

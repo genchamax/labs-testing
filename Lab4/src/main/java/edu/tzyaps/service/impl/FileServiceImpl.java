@@ -14,19 +14,21 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * Created by Max on 13.10.2016.
  */
-@Service
+//@Service("basicFileService")
 public class FileServiceImpl implements FileService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FileServiceImpl.class);
 
-    private static final String FILE_PATH = "resources/";
+    private static final String FILE_PATH = "/resources/";
     private FileType fileType;
     private String contentPath = "";
     private String pattern;
@@ -133,6 +135,27 @@ public class FileServiceImpl implements FileService {
         }
     }
 
+    @Override
+    public List<String> getFileList(String[] fileExtension, String root) {
+        List<String> fileList = new ArrayList<>();
+
+        File folder = new File(root + FILE_PATH + this.contentPath);
+        File[] filesInFolder = folder.listFiles();
+
+        if (filesInFolder == null)
+            return fileList;
+        else if (filesInFolder.length < 1)
+            return fileList;
+
+        for (File file : filesInFolder) {
+            for (String extension : fileExtension) {
+                if (FilenameUtils.getExtension(file.getName()).equalsIgnoreCase(extension))
+                    fileList.add(file.getName());
+            }
+        }
+        return fileList;
+    }
+
     protected String generateFullFilePath(String root, String contentPath) {
         return root + FILE_PATH + contentPath;
     }
@@ -202,7 +225,7 @@ public class FileServiceImpl implements FileService {
 
         if (files == null)
             return -1;
-        if (files.length < 1)
+        else if (files.length < 1)
             return -1;
 
         Pattern pattern = Pattern.compile(this.pattern);

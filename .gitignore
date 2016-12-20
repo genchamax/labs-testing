@@ -19,3 +19,5 @@ Labs.iml
 /Lab6/logfile*.log*
 /Lab3/Lab3.iml
 /Lab4/Lab4.iml
+/Lab4/src/main/webapp/resources/bower_components/
+/Lab4/src/main/webapp/resources/images/

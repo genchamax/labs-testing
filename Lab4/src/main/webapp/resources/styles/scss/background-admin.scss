@@ -1,0 +1,69 @@
+$circleBtnColor: black;
+$circleBtnFontColor: white;
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  -o-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin btn-icon-style {
+  display: block;
+  float: left;
+  width: 100%;
+  line-height: 1em;
+  margin-top: -0.5em;
+  text-align: center;
+  color: $circleBtnFontColor;
+}
+
+.image-item {
+  height: 20vw;
+
+  img {
+    width: 95%;
+    height: 95%;
+  }
+}
+
+.pagination {
+  position: fixed;
+  width: 20%;
+  bottom: 5px;
+  left: 40%;
+  right: 40%;
+}
+
+#upload-image {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.add-image {
+  label {
+    width: 95%;
+    height: 95%;
+    border: 5px solid white;
+    cursor: pointer;
+    @include border-radius(10%);
+    i {
+      @include btn-icon-style;
+      padding-top: 33%;
+      font-size: 10em;
+    }
+  }
+}
+
+.delete-image {
+  position: absolute;
+  right: 10%;
+  top: 0%;
+  z-index: 5;
+  font-size: 3em;
+}

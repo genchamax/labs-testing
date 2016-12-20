@@ -1,11 +1,9 @@
 package edu.tzyaps.service.impl;
 
-
 import edu.tzyaps.util.enums.FileType;
+import org.springframework.stereotype.Service;
 
-/**
- * Created by Max on 13.10.2016.
- */
+@Service("imageFileService")
 public class ImageFileService extends FileServiceImpl {
 
     public ImageFileService() {
