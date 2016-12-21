@@ -1,5 +1,6 @@
 package edu.tzyaps.service.interfaces;
 
+import edu.tzyaps.util.generator.file.FilenameGenerator;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -9,9 +10,9 @@ import java.util.List;
  */
 public interface FileService {
 
-    void saveFile(MultipartFile file, String[] acceptedExtensions, String root);
+    void saveFile(MultipartFile file, String[] acceptedExtensions, String root, FilenameGenerator filenameGenerator);
 
-    void deleteFile(String fileName, String root);
+    boolean deleteFile(String fileName, String root);
 
     void renameFile(String oldName, String newName, String root);
 

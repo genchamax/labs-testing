@@ -1,6 +1,7 @@
 package edu.tzyaps.controller;
 
 import edu.tzyaps.service.interfaces.FileService;
+import edu.tzyaps.util.generator.file.FilenameGeneratorImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class ImageController implements ServletContextAware {
     public ResponseEntity saveImage(@RequestParam("image") MultipartFile image) {
         try {
             imageFileService.saveFile(image, new String[]{"jpg", "jpeg", "png"},
-                    servletContext.getRealPath("/"));
+                    servletContext.getRealPath("/"), new FilenameGeneratorImpl());
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
         }

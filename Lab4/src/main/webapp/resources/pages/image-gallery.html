@@ -1,13 +1,13 @@
 <div ng-cloak="" style="padding-top: 5vh">
     <div class="container-fluid">
         <!--GALLERY-->
-        <div class="col-md-4 col-lg-4 image-item" ng-repeat="image in imageList | limitTo : 5 : getBegin()"
-             data-toggle="modal" data-target="#myModal">
+        <div class="col-md-4 col-lg-4 image-item" ng-repeat="image in imageList | limitTo : 5 : getBegin()">
             <div class="delete-image" ng-click="askAndDeleteImage(image)">
                 <i class="fa fa-times"></i>
             </div>
 
-            <img class="thumbnail" ng-src="/resources/images/{{image}}" alt="{{image}}" ng-click="setCurrentImage(image)"/>
+            <img class="thumbnail" ng-src="/resources/images/{{image}}" alt="{{image}}"
+                 data-toggle="modal" data-target="#myModal" ng-click="setCurrentImage(image)"/>
         </div>
         <div class="col-md-4 col-lg-4 image-item add-image" ng-click="uploadImage">
             <label for="upload-image">

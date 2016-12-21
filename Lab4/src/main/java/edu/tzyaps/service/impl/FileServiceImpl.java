@@ -1,14 +1,15 @@
 package edu.tzyaps.service.impl;
 
 import edu.tzyaps.exceptions.file.filename.EmptyFileNameException;
+import edu.tzyaps.exceptions.file.filename.NotAcceptedExtensionException;
 import edu.tzyaps.exceptions.file.filename.NotUniqueFileNameException;
 import edu.tzyaps.service.interfaces.FileService;
 import edu.tzyaps.util.enums.FileType;
+import edu.tzyaps.util.generator.file.FilenameGenerator;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -17,8 +18,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Max on 13.10.2016.
@@ -47,12 +46,12 @@ public class FileServiceImpl implements FileService {
     public FileServiceImpl() {
     }
 
-    public void saveFile(MultipartFile file, String[] acceptedExtensions, String root) {
+    public void saveFile(MultipartFile file, String[] acceptedExtensions, String root, FilenameGenerator filenameGenerator) {
 
         if (!isExtensionAccepted(file, acceptedExtensions)) {
             LOGGER.error("File {} have not accepted extension. Accepted extensions: {}", file.getName(),
                     Arrays.toString(acceptedExtensions));
-            throw new NotUniqueFileNameException("Not accepted extension");
+            throw new NotAcceptedExtensionException("Not accepted extension");
         }
 
         String filePath = generateFullFilePath(root, contentPath);
@@ -69,7 +68,7 @@ public class FileServiceImpl implements FileService {
 
         // if original file name not unique generate unique file name
         String fileNameWithExtension = (isFilenameUnique(originalFileName, fileFolder.getPath())) ? (originalFileName) :
-                (generateFileName(fileFolder) + "." + fileExtension);
+                (filenameGenerator.generateFilename(fileFolder, this.fileType, this.pattern) + "." + fileExtension);
 
 
         File newFile = new File(filePath + fileNameWithExtension);
@@ -79,11 +78,12 @@ public class FileServiceImpl implements FileService {
             LOGGER.info("Write file {}. Path: {} ", newFile.getName(), newFile.getAbsolutePath());
         } catch (IOException e) {
             LOGGER.error("Can't write {} to file {} \n Cause: {}", file.getName(), newFile.getName(), e.getMessage());
+            throw new IllegalArgumentException("Can't write file");
         }
 
     }
 
-    public void deleteFile(String fileName, String root) {
+    public boolean deleteFile(String fileName, String root) {
         String imagePath = root + FILE_PATH + contentPath + fileName;
 
         File imageFile = new File(imagePath);
@@ -94,8 +94,9 @@ public class FileServiceImpl implements FileService {
             LOGGER.info("File {} deleted", imageFile.getName());
         } else {
             LOGGER.error("Can't delete file {} .\n Path: {} ", imageFile.getName(), imageFile.getAbsolutePath());
-            throw new IllegalArgumentException("Can't delete file " + root + fileName);
         }
+
+        return isDeleted;
     }
 
     /**
@@ -156,18 +157,9 @@ public class FileServiceImpl implements FileService {
         return fileList;
     }
 
-    protected String generateFullFilePath(String root, String contentPath) {
+    //TODO: Check it
+    public String generateFullFilePath(String root, String contentPath) {
         return root + FILE_PATH + contentPath;
-    }
-
-    /**
-     * Generate filename file prefix + max filename index
-     *
-     * @param fileFolder the folder where the file will be saved
-     * @return filename
-     */
-    protected String generateFileName(File fileFolder) {
-        return fileType.getFilePrefix() + getMaxFileIndex(fileFolder.listFiles()) + 1;
     }
 
     /**
@@ -214,38 +206,6 @@ public class FileServiceImpl implements FileService {
         return result;
     }
 
-    /**
-     * Find max index in filename, who's match with pattern
-     *
-     * @param files files in folder
-     * @return max index in filename
-     */
-    private int getMaxFileIndex(File[] files) {
-        int maxFileIndex = 0;
-
-        if (files == null)
-            return -1;
-        else if (files.length < 1)
-            return -1;
-
-        Pattern pattern = Pattern.compile(this.pattern);
-        Matcher matcher;
-
-
-        for (File file : files) {
-            matcher = pattern.matcher(file.getName());
-            int currentFileIndex = 0;
-            try {
-                currentFileIndex = optionalParseInt(matcher, matcher.groupCount());
-            } catch (IllegalArgumentException e) {
-                LOGGER.error("{} not a number", matcher.groupCount() - 1);
-            }
-            if (currentFileIndex > maxFileIndex)
-                maxFileIndex = currentFileIndex;
-        }
-
-        return maxFileIndex;
-    }
 
     /**
      * Create new folder if it not exist.
@@ -271,28 +231,4 @@ public class FileServiceImpl implements FileService {
         return newFolder;
     }
 
-    /**
-     * If filename match with pattern get index of file.
-     *
-     * @param matcher
-     * @param groupIndex
-     * @return index of file
-     */
-    private Integer optionalParseInt(Matcher matcher, int groupIndex) {
-        boolean isMatches = matcher.matches();
-        if (!isMatches) {
-            LOGGER.warn("File name {} don't match with pattern", matcher.pattern().pattern());
-            throw new IllegalArgumentException("File name " + matcher.pattern().pattern() + " don't match with pattern");
-        }
-        String id = matcher.group(groupIndex);
-        if (id.equals(""))
-            throw new IllegalArgumentException("Empty group");
-
-        try {
-            return Integer.parseInt(id);
-        } catch (NumberFormatException e) {
-            LOGGER.error("Can't parse number \n Cause: {}", e.getMessage());
-            throw new IllegalArgumentException("Not a number: " + id);
-        }
-    }
 }
